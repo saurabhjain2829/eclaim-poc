@@ -1,0 +1,16 @@
+#joiner-service configmap, gke-ci
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: joiner-service-configmap
+data:
+  kafka-bootstrap-servers: "35.189.221.176:9092,35.195.40.61:9092,35.195.99.141:9092"
+  kafka-spp-source-topic: "finland-veikkaus-CI-spp-events"
+  kafka-geco-source-topic: "finland-veikkaus-CI-geco-events"
+  kafka-destination-topic: "finland-veikkaus-CI-player-events"
+  kafka-application-id: "finland-veikkaus-joiner-service-CI"
+  dry-run: "false"
+  kafka-cleanup: "false"
+  source-casinoids: "veikkausci"
+
+

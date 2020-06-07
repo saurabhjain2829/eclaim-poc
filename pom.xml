@@ -1,0 +1,148 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.5.RELEASE</version>
+	</parent>
+
+	<groupId>com.nagarro</groupId>
+	<artifactId>eclaim</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		
+		<module>user-management-service</module>
+		<module>policy-management-service</module>
+		<module>claim-management-service</module>
+		<module>eclaim-processing-service</module>
+	</modules>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.dependecy.plugin.version>3.1.1</maven.dependecy.plugin.version>
+		<start-class>com.nagarro.eclaim.EclaimApplication</start-class>
+		<logstash.version>6.1</logstash.version>
+		<kafka.version>2.3.1</kafka.version>
+		<commons.lang3.version>3.9</commons.lang3.version>
+		<jacoco.version>0.8.4</jacoco.version>
+		<springcloud.gcp.version>1.2.2.RELEASE</springcloud.gcp.version>
+		<springcloud.version>Greenwich.RELEASE</springcloud.version>
+	</properties>
+
+	<dependencyManagement>
+	 
+		<dependencies>
+		<dependency>
+			<groupId>com.nagarro</groupId>
+			<artifactId>policy-management-service</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.nagarro</groupId>
+			<artifactId>user-management-service</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>net.logstash.logback</groupId>
+				<artifactId>logstash-logback-encoder</artifactId>
+				<version>${logstash.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons.lang3.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka-streams</artifactId>
+				<version>${kafka.version}</version>
+			</dependency>
+			
+			<!-- Spring Cloud Dependencies -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${springcloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!-- Spring Cloud GCP Dependencies -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-gcp-dependencies</artifactId>
+				<version>${springcloud.gcp.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+	
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-gcp-starter-secretmanager</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-gcp-autoconfigure</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.google.api.grpc</groupId>
+					<artifactId>proto-google-common-protos</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-gcp-autoconfigure</artifactId>
+			<version>${springcloud.gcp.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.google.api.grpc</groupId>
+					<artifactId>proto-google-common-protos</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.google.api.grpc</groupId>
+			<artifactId>proto-google-common-protos</artifactId>
+			<version>1.17.0</version>
+		</dependency>
+	</dependencies>
+
+	
+
+
+	
+	
+	
+</project>

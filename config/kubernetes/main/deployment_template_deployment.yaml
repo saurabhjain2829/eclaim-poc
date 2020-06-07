@@ -1,0 +1,92 @@
+#google cloud deployment template: gke-prod
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: joiner-service
+spec:
+  selector:
+    matchLabels:
+      app: joiner-service
+  template:
+    metadata:
+      labels:
+        name: joiner-service-latest
+        app: joiner-service
+        logzio: enabled
+        logzio-token: BuovsnhNvCDlPfmSgPNcMWmYgEXvNqMh
+        logzio_codec: json
+    spec:
+      containers:
+      - name: joiner-service
+        image: "${imageName}"
+        resources:
+          requests:
+            cpu: "100m"
+            memory: 512Mi
+          limits:
+            cpu: "500m"
+            memory: 1024Mi
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+          name: app
+        readinessProbe:
+          httpGet:
+            path: actuator/health
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: actuator/health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 2
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          valueFrom:
+            configMapKeyRef:
+              name: joiner-service-configmap
+              key: kafka-bootstrap-servers
+        - name: KAFKA_SPP_SOURCE_TOPIC
+          valueFrom:
+            configMapKeyRef:
+              name: joiner-service-configmap
+              key: kafka-spp-source-topic
+        - name: KAFKA_GECO_SOURCE_TOPIC
+          valueFrom:
+            configMapKeyRef:
+              name: joiner-service-configmap
+              key: kafka-geco-source-topic
+        - name: KAFKA_DESTINATION_TOPIC
+          valueFrom:
+            configMapKeyRef:
+              name: joiner-service-configmap
+              key: kafka-destination-topic
+        - name: KAFKA_APPLICATION_ID
+          valueFrom:
+            configMapKeyRef:
+              name: joiner-service-configmap
+              key: kafka-application-id
+        - name: DRY_RUN
+          valueFrom:
+            configMapKeyRef:
+              name: joiner-service-configmap
+              key: dry-run
+        - name: KAFKA_CLEANUP
+          valueFrom:
+            configMapKeyRef:
+              name: joiner-service-configmap
+              key: kafka-cleanup
+        - name: SOURCE_CASINOIDS
+          valueFrom:
+            configMapKeyRef:
+              name: joiner-service-configmap
+              key: source-casinoids
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+  paused: false
+  revisionHistoryLimit: 2
+  minReadySeconds: 0

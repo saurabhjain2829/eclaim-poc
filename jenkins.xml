@@ -1,0 +1,6 @@
+<jenkins-jobs>
+    <jenkins-job>
+        <template>pipeline</template>
+    </jenkins-job>
+    
+</jenkins-jobs>

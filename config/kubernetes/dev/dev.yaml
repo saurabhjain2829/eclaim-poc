@@ -1,0 +1,17 @@
+#joiner-service configmap, gke-dev
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: joiner-service-configmap
+  namespace: markets-finland
+data:
+  kafka-bootstrap-servers: "35.189.221.176:9092,35.195.40.61:9092,35.195.99.141:9092"
+  kafka-spp-source-topic: "spp_events"
+  kafka-geco-source-topic: "game_tracking"
+  kafka-destination-topic: "finland-veikkaus-player-events"
+  kafka-application-id: "finland-veikkaus-joiner-service-DEV"
+  dry-run: "false"
+  kafka-cleanup: "false"
+  source-casinoids: "proactive"
+
+
